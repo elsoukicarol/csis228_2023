@@ -19,8 +19,8 @@ const config = require("./database/config");
 
 /// here we are accessing the variable inside the env file
 
-/// curly brackets because we are importing a function
-const {query} = require("./database/db");
+
+const query = require("./database/db");
 // the process.env is a global object used to access all the variables in the env file
 const port = process.env.PORT;
 
