@@ -20,12 +20,10 @@ const query = async(sql, params) =>{
     if(!connection){
         await connect();
     }
-
     try {
         const [results] = await connection.execute(sql, params);
         return results;
     } catch (error) {
-
         console.error("Query error \n", error.message)
         throw error;
     }

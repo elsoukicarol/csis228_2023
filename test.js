@@ -5,7 +5,9 @@ const express = require("express");
 
 /// initializing class express
 const app = express();
-
+``
+/// requiring library to parse elements from the body
+const bodyParser = require('body-parser')
 
 /// To request the variables from the env file we need to import the file
 
@@ -20,7 +22,7 @@ const config = require("./database/config");
 /// here we are accessing the variable inside the env file
 
 /// curly brackets because we are importing a function
-const {query} = require("./database/db");
+const { query } = require("./database/db");
 // the process.env is a global object used to access all the variables in the env file
 const port = process.env.PORT;
 
@@ -39,9 +41,8 @@ app.get("/", (request, response) => {
 });
 
 /// port 3001
-app.listen(port);
-
-console.log("App is runnin on port", port);
+app.listen(port, () => {
+});
 
 
 /// Second route
@@ -54,12 +55,22 @@ app.get("/test", (request, response) => {
     });
 })
 
-app.get("/users", async(request, response) => {
-    const userSQL = "SELECT * FROM USERS";
-    const users = await query(userSQL);
-    response.status(200).json({users});
-})
+// const allUsersRoute = router;
+/// we are going to change this or the route we create in the service file
+/// both do basically the same
 
+const userRoutes = require("./routes/user.route");
+
+app.use(bodyParser.json())
+
+app.use("/api/users", userRoutes);
+
+app.use("/api/users", userRoutes);
 /// look up asyn and await
 
-console.log(config);
+
+app.get("/khalil", (req, res) => {
+    res.status(200).json({
+        message: "hola",
+    })
+});
