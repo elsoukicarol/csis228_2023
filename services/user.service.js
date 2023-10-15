@@ -17,7 +17,7 @@ const insertUser = async(userData)=> {
     var dob = userData.dob;
 
     try {
-        var sql = "INSERT INTO `users`(`user_first_name`, `user_last_name`, `user_dob`) VALUES (?, ?, ?)";
+        let sql = "INSERT INTO `users`(`user_first_name`, `user_last_name`, `user_dob`) VALUES (?, ?, ?)";
         
         const users = await query(sql, [name, lastName, dob || null]);
         return users;
@@ -26,8 +26,25 @@ const insertUser = async(userData)=> {
         throw new Error(error);
     }
 };
+
+const userUpdate = async(userData) => {
+
+    let sql = "UPDATE `users` SET `user_first_name`=?, `user_last_name`=?, `user_dob`=? WHERE `userid` = ?";
+    const users = await query(sql, [userData.name, userData.lastName, userData.dob, userData.id]);
+    return users;
+}
+
+const deleteUser = async(id) => {
+
+    let sql = "DELETE FROM `users` WHERE `userid` = ?";
+    const users = await query(sql, [id]);
+    return users;
+}
+
 // now export this service so we can use it in the controller
 module.exports = {
     loadUser,
     insertUser,
+    userUpdate,
+    deleteUser,
 };
