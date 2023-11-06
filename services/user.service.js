@@ -1,5 +1,9 @@
 const { query } = require("../database/db");
 
+/// moment is a js library for date management I didnt use it because 
+/// i have no tables that include dates
+const moment = require("moment");
+
 const loadUser = async() =>{
     try {
         var sql = "SELECT * FROM USERS";
@@ -21,7 +25,6 @@ const insertUser = async(userData)=> {
         
         const users = await query(sql, [name, lastName, dob || null]);
         return users;
-
     } catch (error) {
         throw new Error(error);
     }

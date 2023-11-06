@@ -1,4 +1,5 @@
-const { loadUser, insertUser, userUpdate, deleteUser } = require("../services/user.service")
+const { loadUser, insertUser, userUpdate, deleteUser } = require("../services/user.service");
+const { validationResult } = require("../validators/user-validator");
 
 // this method will validate data d
 const getAllUserController = async(request, response) => {
@@ -12,6 +13,11 @@ const getAllUserController = async(request, response) => {
 
 const insertUserController = async(request, response) =>{
 
+
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+        return response.status(400).json({ errors: errors.array() });
+    }
     // crearting the user object
     const userData = {
         name: request.body.name,
@@ -28,6 +34,11 @@ const insertUserController = async(request, response) =>{
 }
 
 const updateUserController = async(request, response) =>{
+
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+        return response.status(400).json({ errors: errors.array() });
+    }
 
     // crearting the user object
     const userData = {
@@ -46,6 +57,11 @@ const updateUserController = async(request, response) =>{
 }
 
 const deleteUserController = async(request, response) =>{
+
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+        return response.status(400).json({ errors: errors.array() });
+    }
 
     // crearting the user object
     const id = request.body.id;
